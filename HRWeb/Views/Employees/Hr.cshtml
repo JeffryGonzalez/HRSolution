@@ -29,7 +29,7 @@
 
 			</article>
 			<article class="col-md-9">
-				<h2>Jeff Is <marquee><blink>AWESOME!</blink></marquee></h2>
+				<h2>Employee Information</h2>
 				<form class="form">
 					<div class="form-group">
 						<label for="firstName">First Name</label>
@@ -53,6 +53,10 @@
 			</article>
 			<article class="col-md-offset-3 col-md-3">
 				<h3>Employee Lookup</h3>
+				<div><input class="form-control input-sm" ng-model="lookupId"/><input type="button" class="btn btn-primary" value="Find" ng-click="find(lookupId)"/></div>
+				<div>
+					<p>{{currentEmployee.id}} {{currentEmployee.firstName}} {{currentEmployee.lastName}}</p>
+				</div>
 			</article>
 		</section>
 
@@ -63,11 +67,25 @@
 
 		var app = angular.module("hrApp", ['ngResource']);
 
-		app.controller('HrController', function ($scope, hiringService) {
+		app.controller('HrController', function ($scope, employeeService) {
 			$scope.newEmployee = {};
 			$scope.recentHires = [];
+			$scope.currentEmployee = {};
+			$scope.find = function (id) {
+				var emp = employeeService.find({"id": id});
+				emp.$promise.then(function() {
+					$scope.currentEmployee = emp;
+				});
+				emp.$promise.catch(function(error) {
+					if (error.status === 404) {
+						alert("No Such Employee");
+					}
+				});
+
+
+			}
 			$scope.hire = function (employee) {
-				var addedEmployee = hiringService.hire(employee);
+				var addedEmployee = employeeService.hire(employee);
 				console.log(addedEmployee);
 
 				addedEmployee.$promise.then(function () {
@@ -84,21 +102,17 @@
 			}
 		});
 
-		app.service('hiringService', function ($resource) {
+		app.service('employeeService', function ($resource) {
 
-			return $resource('/api/employees', {}, {
+			return $resource('/api/employees/:id', {id: "id"}, {
 				hire: {
 					method: "POST"
+				},
+				find: {
+					method: "GET"
 				}
 			});
 
-			//return {
-			//	hire: function (employee) {
-			//		employee.email = "bob@aol.com";
-			//		employee.id = 99;
-			//		return employee;
-			//	}
-			//}
 		});
 	</script>
 </body>

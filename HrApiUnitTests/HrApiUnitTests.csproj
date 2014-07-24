@@ -81,6 +81,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FindingAnEmployee.cs" />
     <Compile Include="FormattingEmailsTests.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HiringEmployeesTests.cs" />
