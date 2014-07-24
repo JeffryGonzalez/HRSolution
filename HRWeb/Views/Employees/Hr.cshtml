@@ -1,0 +1,105 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title></title>
+	<link href="~/content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container" ng-app="hrApp">
+		<header class="page-header">
+			<h1>Employee Hiring</h1>
+		</header>
+		<section class="row" ng-controller="HrController">
+			<article class="col-md-3">
+				<h3>Recently Hired</h3>
+				<ul class="list-unstyled">
+					<li ng-repeat="emp in recentHires" class="well well-sm">
+						<h4>{{emp.firstName}} {{emp.lastName}}</h4>
+						<p>Employee Id: {{emp.id}}</p>
+						<p>Salary: {{emp.salary}}</p>
+						<p>Email: {{emp.email}} </p>
+					</li>
+				</ul>
+
+			</article>
+			<article class="col-md-9">
+				<h2>Jeff Is <marquee><blink>AWESOME!</blink></marquee></h2>
+				<form class="form">
+					<div class="form-group">
+						<label for="firstName">First Name</label>
+						<input type="text" class="form-control" ng-model="newEmployee.firstName"
+							id="firstName" placeholder="First Name">
+					</div>
+					<div class="form-group">
+						<label for="lastName">Last Name</label>
+						<input type="text" class="form-control" ng-model="newEmployee.lastName"
+							 id="lastName" placeholder="Last Name">
+					</div>
+					<div class="form-group">
+						<label for="salary">Salary</label>
+						<input type="number" class="form-control"
+							 id="salary" placeholder="10000" ng-model="newEmployee.salary">
+					</div>
+					<div class="form-group">
+						<input type="button" class="btn btn-danger" value="Hire Employee" ng-click="hire(newEmployee)" />
+					</div>
+				</form>
+			</article>
+			<article class="col-md-offset-3 col-md-3">
+				<h3>Employee Lookup</h3>
+			</article>
+		</section>
+
+	</div>
+	<script src="~/scripts/angular.js"></script>
+	<script src="~/scripts/angular-resource.js"></script>
+	<script>	
+
+		var app = angular.module("hrApp", ['ngResource']);
+
+		app.controller('HrController', function ($scope, hiringService) {
+			$scope.newEmployee = {};
+			$scope.recentHires = [];
+			$scope.hire = function (employee) {
+				var addedEmployee = hiringService.hire(employee);
+				console.log(addedEmployee);
+
+				addedEmployee.$promise.then(function () {
+					$scope.recentHires.push(addedEmployee);
+				});
+
+				addedEmployee.$promise.catch(function (error) {
+					//window.lastError = error;
+					for (var errorMessage in error.data.modelState) {
+						alert(errorMessage + ": " +  error.data.modelState[errorMessage])
+					}
+				});
+
+			}
+		});
+
+		app.service('hiringService', function ($resource) {
+
+			return $resource('/api/employees', {}, {
+				hire: {
+					method: "POST"
+				}
+			});
+
+			//return {
+			//	hire: function (employee) {
+			//		employee.email = "bob@aol.com";
+			//		employee.id = 99;
+			//		return employee;
+			//	}
+			//}
+		});
+	</script>
+</body>
+</html>
