@@ -31,7 +31,7 @@ namespace HrApiUnitTests
 			var fakeSet = MockRepository.GenerateStub<DbSet<Employee>>();
 			fakeContext.Employees = fakeSet;
 
-			var ec = new StandardEmployeeCommands(dummyEmailProvider, fakeContext);
+			var ec = new StandardEmployeePersistance(dummyEmailProvider, fakeContext);
 
 			var result = ec.Add(new NewEmployee { FirstName = "Bob", LastName = "Smith" });
 
@@ -51,7 +51,7 @@ namespace HrApiUnitTests
 				&& a.Salary == 30000)));
 			fakeContext.Employees = fakeSet;
 			
-			var ec = new StandardEmployeeCommands(dummyEmailProvider, fakeContext);
+			var ec = new StandardEmployeePersistance(dummyEmailProvider, fakeContext);
 
 			var result = ec.Add(new NewEmployee { FirstName = "Bob", LastName = "Smith", Salary = 30000});
 
@@ -65,7 +65,7 @@ namespace HrApiUnitTests
 			var fakeContext = MockRepository.GenerateMock<HrContext>();
 			fakeContext.Stub(e=>e.Employees).Return( MockRepository.GenerateStub<DbSet<Employee>>()); 
 
-			var ec = new StandardEmployeeCommands(dummyEmailProvider, fakeContext);
+			var ec = new StandardEmployeePersistance(dummyEmailProvider, fakeContext);
 
 			ec.Add(new NewEmployee { FirstName = "Bob", LastName = "Smith", Salary = 30000 });
 

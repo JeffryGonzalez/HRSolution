@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IEmployeeQueries.cs" />
     <Compile Include="Infrastructure\UnityResolver.cs" />
     <Compile Include="Infrastructure\ValidateModelAttribute.cs" />
     <Compile Include="Models\NewEmployee.cs" />

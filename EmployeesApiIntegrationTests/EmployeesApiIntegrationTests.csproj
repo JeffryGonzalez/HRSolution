@@ -81,6 +81,7 @@
     <Compile Include="GlobalInitialize.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HiringEmployeesHappyPathTests.cs" />
+    <Compile Include="LookingUpEmployees.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

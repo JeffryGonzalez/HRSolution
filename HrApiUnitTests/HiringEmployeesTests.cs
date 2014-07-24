@@ -24,7 +24,7 @@ namespace HrApiUnitTests
 			fakeEmployeeCommands.Stub(f => f.Add(employeeToAdd)).Return(employeeToReturn);
 
 			
-			var controller = new EmployeesController(fakeEmployeeCommands);
+			var controller = new EmployeesController(fakeEmployeeCommands,null);
 			Helpers.SetupController(controller);
 			// act - WHEN
 			var response = controller.Post(employeeToAdd);

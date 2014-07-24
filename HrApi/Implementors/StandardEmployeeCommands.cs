@@ -1,20 +1,17 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Web.Http.Controllers;
+﻿using AutoMapper;
 using HrApi.Contracts;
 using HrApi.Models;
 using HrDomain;
-using AutoMapper;
 
 namespace HrApi.Implementors
 {
-	public class StandardEmployeeCommands : IEmployeeCommands
+	public class StandardEmployeePersistance : IEmployeeCommands, IEmployeeQueries
 	{
 
 		private readonly IFormatEmailAddresses emailFormatter;
 		private readonly HrContext context;
 
-		public StandardEmployeeCommands(IFormatEmailAddresses emailFormatter, HrContext context)
+		public StandardEmployeePersistance(IFormatEmailAddresses emailFormatter, HrContext context)
 		{
 			this.emailFormatter = emailFormatter;
 			this.context = context;
@@ -32,6 +29,13 @@ namespace HrApi.Implementors
 
 			var response = Mapper.Map<NewEmployeeResponse>(employeeEntity);
 			return response;
+		}
+
+		public NewEmployeeResponse Find(int id)
+		{
+			var result = context.Employees.Find(id);
+			if (result == null) return null;
+			return Mapper.Map<NewEmployeeResponse>(result);
 		}
 	}
 }

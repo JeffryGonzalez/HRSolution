@@ -56,9 +56,9 @@ namespace HrApi
 		public static void SetupUnityContainer(HttpConfiguration config)
 		{
 			var container = new UnityContainer();
-			container.RegisterType<IEmployeeCommands, StandardEmployeeCommands>();
+			container.RegisterType<IEmployeeCommands, StandardEmployeePersistance>();
 			container.RegisterType<IFormatEmailAddresses, CorporateEmailFormatter>();
-
+			container.RegisterType<IEmployeeQueries, StandardEmployeePersistance>();
 			var resolver = new UnityResolver(container);
 
 			config.DependencyResolver = resolver;

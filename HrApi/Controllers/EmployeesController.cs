@@ -13,12 +13,14 @@ namespace HrApi.Controllers
 	{
 
 		private readonly IEmployeeCommands employeeCommands;
+		private readonly IEmployeeQueries employeeQueries;
 
-		public EmployeesController(IEmployeeCommands commands)
+		public EmployeesController(IEmployeeCommands employeeCommands, IEmployeeQueries employeeQueries)
 		{
-			employeeCommands = commands;
+			this.employeeCommands = employeeCommands;
+			this.employeeQueries = employeeQueries;
 		}
-		
+
 
 		[Route("")]
 		[ValidateModel] // <-- moved model validation to a reusable filter. See this class in infrastructure
@@ -27,6 +29,22 @@ namespace HrApi.Controllers
 				var response = employeeCommands.Add(employee);
 
 				return Request.CreateResponse(HttpStatusCode.Accepted, response);
+		}
+
+		[Route("{id:int}")]
+		public NewEmployeeResponse Get(int id)
+		{
+			var response = employeeQueries.Find(id);
+			GuardNotFound(response);
+			return response;
+		}
+
+		private static void GuardNotFound(object response)
+		{
+			if (response == null)
+			{
+				throw new HttpResponseException(HttpStatusCode.NotFound);
+			}
 		}
 	}
 }

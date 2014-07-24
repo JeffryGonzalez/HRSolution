@@ -5,6 +5,9 @@ using Microsoft.Practices.Unity;
 
 namespace HrApi.Infrastructure
 {
+	/// <summary>
+	/// This is from http://www.asp.net/web-api/overview/extensibility/using-the-web-api-dependency-resolver
+	/// </summary>
 	public class UnityResolver : IDependencyResolver
 	{
 		protected IUnityContainer container;
