@@ -14,11 +14,7 @@ namespace HrApi
 			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
 
-			config.Routes.MapHttpRoute(
-				name: "HrApiRoute",
-				routeTemplate: "api/{controller}/{id}",
-				defaults: new { id = RouteParameter.Optional }
-				);
+			config.MapHttpAttributeRoutes();
 		}
 	}
 }

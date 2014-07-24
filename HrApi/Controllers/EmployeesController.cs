@@ -7,6 +7,7 @@ using HrApi.Models;
 
 namespace HrApi.Controllers
 {
+	[RoutePrefix("api/employees")]
 	public class EmployeesController : ApiController
 	{
 
@@ -22,6 +23,7 @@ namespace HrApi.Controllers
 			employeeCommands = new StandardEmployeeCommands(new CorporateEmailFormatter());
 		}
 
+		[Route("")]
 		public HttpResponseMessage Post(NewEmployee employee)
 		{
 			if (ModelState.IsValid)
