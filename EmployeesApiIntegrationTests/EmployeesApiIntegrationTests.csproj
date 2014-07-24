@@ -78,6 +78,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GlobalInitialize.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HiringEmployeesHappyPathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +91,10 @@
     <ProjectReference Include="..\HrApi\HrApi.csproj">
       <Project>{d5623723-7b61-4b8b-9a28-14560246167e}</Project>
       <Name>HrApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HrDomain\HrDomain.csproj">
+      <Project>{8B54803D-1939-473B-8C96-80AF12E7B11F}</Project>
+      <Name>HrDomain</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
