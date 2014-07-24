@@ -12,29 +12,21 @@ namespace HrApi.Controllers
 	public class EmployeesController : ApiController
 	{
 
-		private IEmployeeCommands employeeCommands;
+		private readonly IEmployeeCommands employeeCommands;
 
 		public EmployeesController(IEmployeeCommands commands)
 		{
 			employeeCommands = commands;
 		}
-
 		
 
 		[Route("")]
-		[ValidateModel]
+		[ValidateModel] // <-- moved model validation to a reusable filter. See this class in infrastructure
 		public HttpResponseMessage Post(NewEmployee employee)
 		{
-			if (ModelState.IsValid)
-			{
 				var response = employeeCommands.Add(employee);
 
 				return Request.CreateResponse(HttpStatusCode.Accepted, response);
-			}
-			else
-			{
-				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, ModelState));
-			}
 		}
 	}
 }

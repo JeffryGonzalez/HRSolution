@@ -14,22 +14,33 @@ namespace HrApi
 	{
 		public static void Configure(HttpConfiguration config)
 		{
-			//  C#        ->  javaScript
-			//"FirstName" -> "firstName" 
-			var formatter = config.Formatters.JsonFormatter;
-			var settings = formatter.SerializerSettings;
-			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			UseJsonCamelCaseFormatter(config);
 
-
+			// No longer using standard routing, all attribute-based
 			config.MapHttpAttributeRoutes();
 
-			SetupContainer(config);
+			SetupUnityContainer(config);
 
-			SetupMappings();
+			SetupAutoMapperMappings();
 			
 		}
 
-		public static void SetupMappings()
+		/// <summary>
+		/// JSON results are now camelCased to make them more idiomatic JavaScript	
+		/// </summary>
+		/// <param name="config"></param>
+		private static void UseJsonCamelCaseFormatter(HttpConfiguration config)
+		{
+			var formatter = config.Formatters.JsonFormatter;
+			var settings = formatter.SerializerSettings;
+			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+		}
+
+		/// <summary>
+		/// Allows for mapping (copying) properties from one object to another.
+		/// See http://automapper.org/
+		/// </summary>
+		public static void SetupAutoMapperMappings()
 		{
 			Mapper.CreateMap<NewEmployee, Employee>()
 				.ForMember(dest => dest.Email, opt => opt.Ignore())
@@ -38,7 +49,11 @@ namespace HrApi
 			Mapper.CreateMap<Employee, NewEmployeeResponse>();
 		}
 
-		public static void SetupContainer(HttpConfiguration config)
+		/// <summary>
+		/// Uses Unity for IOC. The UnityResolver class is in the Infrastructure namespace
+		/// </summary>
+		/// <param name="config"></param>
+		public static void SetupUnityContainer(HttpConfiguration config)
 		{
 			var container = new UnityContainer();
 			container.RegisterType<IEmployeeCommands, StandardEmployeeCommands>();

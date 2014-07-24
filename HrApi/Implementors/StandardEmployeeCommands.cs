@@ -11,8 +11,8 @@ namespace HrApi.Implementors
 	public class StandardEmployeeCommands : IEmployeeCommands
 	{
 
-		private IFormatEmailAddresses emailFormatter;
-		private HrContext context;
+		private readonly IFormatEmailAddresses emailFormatter;
+		private readonly HrContext context;
 
 		public StandardEmployeeCommands(IFormatEmailAddresses emailFormatter, HrContext context)
 		{
@@ -20,10 +20,13 @@ namespace HrApi.Implementors
 			this.context = context;
 		}
 
+		
 		public NewEmployeeResponse Add(NewEmployee employee)
 		{
+			// copies properties from employe (NewEmployee) into an Employee entity from the domain.
 			var employeeEntity = Mapper.Map<Employee>(employee);
 			employeeEntity.Email = emailFormatter.For(employee.FirstName, employee.LastName);;
+
 			context.Employees.Add(employeeEntity);
 			context.SaveChanges();
 

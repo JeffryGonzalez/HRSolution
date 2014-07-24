@@ -19,7 +19,7 @@ namespace HrApiUnitTests
 		[TestInitialize]
 		public void GetReady()
 		{
-			Setup.SetupMappings();
+			Setup.SetupAutoMapperMappings();
 			dummyEmailProvider = MockRepository.GenerateStub<IFormatEmailAddresses>();
 			dummyEmailProvider.Stub(f => f.For("Bob", "Smith")).Return("studboy@aol.com");
 
