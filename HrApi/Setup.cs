@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using HrApi.Contracts;
+using HrApi.Implementors;
+using HrApi.Infrastructure;
+using Microsoft.Practices.Unity;
+using Newtonsoft.Json.Serialization;
 using System.Web.Http;
 
 namespace HrApi
@@ -15,6 +19,14 @@ namespace HrApi
 
 
 			config.MapHttpAttributeRoutes();
+
+			var container = new UnityContainer();
+			container.RegisterType<IEmployeeCommands, StandardEmployeeCommands>();
+			container.RegisterType<IFormatEmailAddresses, CorporateEmailFormatter>();
+
+			var resolver = new UnityResolver(container);
+
+			config.DependencyResolver = resolver;
 		}
 	}
 }

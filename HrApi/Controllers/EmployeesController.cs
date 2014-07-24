@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HrApi.Contracts;
 using HrApi.Implementors;
+using HrApi.Infrastructure;
 using HrApi.Models;
 
 namespace HrApi.Controllers
@@ -18,12 +19,10 @@ namespace HrApi.Controllers
 			employeeCommands = commands;
 		}
 
-		public EmployeesController() //TODO: Use IOC instead. This is lame.
-		{
-			employeeCommands = new StandardEmployeeCommands(new CorporateEmailFormatter());
-		}
+		
 
 		[Route("")]
+		[ValidateModel]
 		public HttpResponseMessage Post(NewEmployee employee)
 		{
 			if (ModelState.IsValid)
