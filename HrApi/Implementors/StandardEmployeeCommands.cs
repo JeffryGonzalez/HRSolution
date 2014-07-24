@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HrApi.Contracts;
+using HrApi.Models;
 
-namespace HrApi
+namespace HrApi.Implementors
 {
 	public class StandardEmployeeCommands : IEmployeeCommands
 	{

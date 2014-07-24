@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using HrApi.Contracts;
 
-namespace HrApi
+namespace HrApi.Implementors
 {
 	public class CorporateEmailFormatter : IFormatEmailAddresses
 	{

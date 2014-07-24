@@ -1,4 +1,7 @@
 ﻿using System;
+using HrApi.Contracts;
+using HrApi.Controllers;
+using HrApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HrApi;
 using Rhino.Mocks;

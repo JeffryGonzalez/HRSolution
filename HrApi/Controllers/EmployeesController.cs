@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using HrApi.Contracts;
+using HrApi.Implementors;
+using HrApi.Models;
 
-namespace HrApi
+namespace HrApi.Controllers
 {
 	public class EmployeesController : ApiController
 	{
@@ -33,21 +35,5 @@ namespace HrApi
 				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, ModelState));
 			}
 		}
-	}
-
-	public class NewEmployee
-	{
-		[Required]
-		public string FirstName { get; set; }
-		[Required]
-		public string LastName { get; set; }
-		[Range(1D, 1000000D)]
-		public decimal Salary { get; set; }
-	}
-
-	public class NewEmployeeResponse : NewEmployee 
-	{
-		public int Id {get; set;}
-		public string Email {get; set;}
 	}
 }
