@@ -104,7 +104,7 @@
 
 		app.service('employeeService', function ($resource) {
 
-			return $resource('/api/employees/:id', {id: "id"}, {
+			return $resource('/api/employees/:id', {id: ""}, {
 				hire: {
 					method: "POST"
 				},
