@@ -24,9 +24,9 @@ namespace EmployeesApiIntegrationTests
 
 		private bool Matches(dynamic employee)
 		{
-			return employee.firstName.Value == "Joe"
-			       && employee.lastName.Value == "Schmidt"
-			       && decimal.Parse(employee.salary.Value.ToString()) == 30000
+			return employee.firstName.Value == "Bob"
+			       && employee.lastName.Value == "Smith"
+			       && decimal.Parse(employee.salary.Value.ToString()) == 32000
 			       && int.Parse(employee.id.Value.ToString()) == 1;
 		}
 
